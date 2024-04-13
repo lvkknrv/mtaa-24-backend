@@ -3,7 +3,7 @@ import client from '../../db.js';
 
 const deleteRouter = express.Router();
 
-deleteRouter.delete('/:userId', async (req, res) => {
+deleteRouter.delete('/:userId/delete', async (req, res) => {
     const userId = req.params.userId;
     try {
         await client.query('DELETE FROM users WHERE id = $1', [userId]);

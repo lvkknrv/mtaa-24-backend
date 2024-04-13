@@ -3,6 +3,7 @@ import client from './db.js';
 import registerRouter from './endpoints/user_managment/register.js';
 import loginRouter from "./endpoints/user_managment/login.js";
 import deleteRouter from "./endpoints/user_managment/delete_account.js";
+import updatePasswordRouter from "./endpoints/user_managment/password_change.js";
 
 const PORT = 5000;
 const app = express();
@@ -10,7 +11,8 @@ const app = express();
 app.use(express.json());
 app.use('/register', registerRouter)
 app.use('/login', loginRouter)
-app.use('/users/delete', deleteRouter);
+app.use('/users', deleteRouter);
+app.use('/users', updatePasswordRouter);
 
 app.get('/users', async (req, res) => {
     try {
