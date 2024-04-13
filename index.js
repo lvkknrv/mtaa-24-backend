@@ -1,10 +1,11 @@
 import express from 'express';
 import client from './db.js';
-import registerRouter from './endpoints/user_managment/register.js';
-import loginRouter from "./endpoints/user_managment/login.js";
-import deleteRouter from "./endpoints/user_managment/delete_account.js";
-import updatePasswordRouter from "./endpoints/user_managment/password_change.js";
-import logoutRouter from "./endpoints/user_managment/logout.js";
+import registerRouter from './endpoints/user_management/register.js';
+import loginRouter from "./endpoints/user_management/login.js";
+import deleteRouter from "./endpoints/user_management/delete_account.js";
+import updatePasswordRouter from "./endpoints/user_management/password_change.js";
+import logoutRouter from "./endpoints/user_management/logout.js";
+import createOrderRouter from "./endpoints/order_management/create.js";
 
 
 const PORT = 8000;
@@ -16,6 +17,7 @@ app.use('/login', loginRouter)
 app.use('/users', deleteRouter);
 app.use('/users', updatePasswordRouter);
 app.use('/users', logoutRouter);
+app.use('/orders', createOrderRouter);
 
 app.get('/users', async (req, res) => {
     try {

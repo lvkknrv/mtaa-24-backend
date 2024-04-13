@@ -6,7 +6,7 @@ const updatePasswordRouter = express.Router();
 updatePasswordRouter.put('/:userId/password', async (req, res) => {
     const userId = req.params.userId;
     const newPassword = req.body.newPassword;
-    const confirmPassword = req.body.confirmPassword; // Добавляем поле для подтверждения пароля
+    const confirmPassword = req.body.confirmPassword;
 
     if (newPassword !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match' });
