@@ -9,7 +9,6 @@ import createOrderRouter from "./endpoints/order_management/create.js";
 import cancelOrderRouter from "./endpoints/order_management/cancel.js";
 import availableOrdersRouter from "./endpoints/order_management/available_orders.js";
 
-
 const PORT = 8000;
 const app = express();
 

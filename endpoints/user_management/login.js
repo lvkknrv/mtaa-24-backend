@@ -1,12 +1,9 @@
 import express from 'express';
 import client from '../../db.js';
-import jwt from 'jsonwebtoken';
+import {generateToken} from '../../tokenmanagement.js';
 
 const loginRouter = express.Router();
 
-function generateToken(userId) {
-    return jwt.sign({userId: userId}, 'secret-key');
-}
 loginRouter.post('/', async (req, res) => {
     try {
         const {username, password} = req.body;
