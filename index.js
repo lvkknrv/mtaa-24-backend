@@ -12,6 +12,9 @@ import updateUsernameRouter from "./endpoints/user_management/username_change.js
 import acceptOrderRouter from "./endpoints/order_management/accept_order.js";
 import startTripRouter from "./endpoints/order_management/trip_start.js";
 import endTripRouter from "./endpoints/order_management/trip_end.js";
+import uploadImageRouter from "./endpoints/user_management/photo_upload.js";
+import email_change from "./endpoints/user_management/email_change.js";
+import updateEmailRouter from "./endpoints/user_management/email_change.js";
 
 const PORT = 8000;
 const app = express();
@@ -22,7 +25,9 @@ app.use('/login', loginRouter)
 app.use('/users', deleteRouter);
 app.use('/users', updatePasswordRouter);
 app.use('/users', logoutRouter);
-app.use('/users', updateUsernameRouter)
+app.use('/users', updateUsernameRouter);
+app.use('/users', updateEmailRouter);
+app.use('/users', uploadImageRouter);
 app.use('/orders', createOrderRouter);
 app.use('/orders', cancelOrderRouter);
 app.use('/online', availableOrdersRouter);

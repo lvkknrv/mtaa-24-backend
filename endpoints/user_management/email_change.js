@@ -1,13 +1,8 @@
 import express from 'express';
-import validator from 'email-validator'; // Импортируем библиотеку для валидации имейла
+import validator from 'email-validator';
 import client from '../../db.js';
 
 const updateEmailRouter = express.Router();
-
-// Функция для проверки валидности имейла
-function isValidEmail(email) {
-    return validator.validate(email); // Используем метод validate из библиотеки email-validator
-}
 
 updateEmailRouter.put('/:userId/email', async (req, res) => {
     const userId = req.params.userId;
@@ -19,7 +14,7 @@ updateEmailRouter.put('/:userId/email', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (!validator.validate(email)) {
+        if (!validator.validate(newEmail)) {
             return res.status(400).json({ message: 'Invalid email format' });
         }
 
