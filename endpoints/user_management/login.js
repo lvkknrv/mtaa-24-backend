@@ -6,16 +6,16 @@ const loginRouter = express.Router();
 
 loginRouter.post('/', async (req, res) => {
     try {
-        const {username, password} = req.body;
+        const {email, password} = req.body;
 
-        if (!username) {
-            return res.status(400).json({error: 'Please provide a username.'});
+        if (!email) {
+            return res.status(400).json({error: 'Please provide an email.'});
         }
         if (!password) {
             return res.status(400).json({error: 'Please provide a password.'});
         }
 
-        const result = await client.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password]);
+        const result = await client.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, password]);
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
