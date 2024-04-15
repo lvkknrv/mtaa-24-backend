@@ -8,6 +8,8 @@ import logoutRouter from "./endpoints/user_management/logout.js";
 import createOrderRouter from "./endpoints/order_management/create.js";
 import cancelOrderRouter from "./endpoints/order_management/cancel.js";
 import availableOrdersRouter from "./endpoints/order_management/available_orders.js";
+import updateUsernameRouter from "./endpoints/user_management/username_change.js";
+import acceptOrderRouter from "./endpoints/order_management/accept_order.js";
 
 const PORT = 8000;
 const app = express();
@@ -18,9 +20,11 @@ app.use('/login', loginRouter)
 app.use('/users', deleteRouter);
 app.use('/users', updatePasswordRouter);
 app.use('/users', logoutRouter);
+app.use('/users', updateUsernameRouter)
 app.use('/orders', createOrderRouter);
 app.use('/orders', cancelOrderRouter);
 app.use('/online', availableOrdersRouter);
+app.use('/online', acceptOrderRouter());
 
 app.get('/users', async (req, res) => {
     try {

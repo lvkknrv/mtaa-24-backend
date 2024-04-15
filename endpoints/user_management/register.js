@@ -1,4 +1,5 @@
 import express from 'express';
+import validator from 'email-validator';
 import client from '../../db.js';
 
 const registerRouter = express.Router();
@@ -16,6 +17,9 @@ registerRouter.post('/', async (req, res) => {
         }
         if (!email) {
             return res.status(400).json({error: 'Please provide an email.'});
+        }
+        if (!validator.validate(email)) {
+            return res.status(400).json({error: 'Invalid email format.'});
         }
         if (!password) {
             return res.status(400).json({error: 'Please provide a password.'});
