@@ -5,13 +5,6 @@ import {verifyToken} from "../../tokenmanagement.js";
 
 const updateEmailRouter = express.Router();
 
-<<<<<<< HEAD
-function isValidEmail(email) {
-    return validator.validate(email);
-}
-
-=======
->>>>>>> f7855045ba9b9096f077894d7f183f39f6b09f82
 updateEmailRouter.put('/:userId/email', async (req, res) => {
     try {
         const userId = req.params.userId;

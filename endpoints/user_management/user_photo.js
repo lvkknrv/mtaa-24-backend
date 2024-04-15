@@ -1,13 +1,19 @@
 import express from 'express';
 import client from '../../db.js';
 import sharp from 'sharp';
+import {verifyToken} from "../../tokenmanagement.js";
 
 const getUserPhotoRouter = express.Router();
 
 getUserPhotoRouter.get('/:userId/photo', async (req, res) => {
-    const userId = req.params.userId;
-
     try {
+        const userId = req.params.userId;
+
+        const decodedUserId = await verifyToken(userId);
+        if (!decodedUserId) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         const result = await client.query('SELECT image FROM users WHERE id = $1', [userId]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });

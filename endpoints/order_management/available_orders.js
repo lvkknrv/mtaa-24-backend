@@ -1,13 +1,10 @@
 import express from 'express';
 import client from '../../db.js';
-import {verifyToken} from "../../tokenmanagement.js";
 
 const availableOrdersRouter = express.Router();
 
 availableOrdersRouter.get('/', async (req, res) => {
     try {
-
-
         const availableOrdersResult = await client.query(
             'SELECT * FROM orders WHERE status_id = 4'
         );
