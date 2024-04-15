@@ -12,9 +12,7 @@ import acceptOrderRouter from "./endpoints/order_management/accept_order.js";
 import startTripRouter from "./endpoints/order_management/trip_start.js";
 import endTripRouter from "./endpoints/order_management/trip_end.js";
 import uploadImageRouter from "./endpoints/user_management/photo_upload.js";
-import email_change from "./endpoints/user_management/email_change.js";
 import updateEmailRouter from "./endpoints/user_management/email_change.js";
-import getUserRouter from "./endpoints/user_management/user_photo.js";
 import getUserPhotoRouter from "./endpoints/user_management/user_photo.js";
 import getUserInfoRouter from "./endpoints/user_management/user_info.js";
 

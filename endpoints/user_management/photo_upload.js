@@ -7,7 +7,7 @@ const uploadImageRouter = express.Router();
 
 const upload = multer();
 
-uploadImageRouter.post('/:userId/photo/upload', upload.single('imageFile'), async (req, res) => {
+uploadImageRouter.put('/:userId/photo/upload', upload.single('imageFile'), async (req, res) => {
     try {
         const userId = req.params.userId;
         const imageData = req.file.buffer;
@@ -17,7 +17,7 @@ uploadImageRouter.post('/:userId/photo/upload', upload.single('imageFile'), asyn
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const result = await client.query('UPDATE users SET image = $1 WHERE id = $2\n', [imageData, userId]);
+        await client.query('UPDATE users SET image = $1 WHERE id = $2\n', [imageData, userId]);
 
         res.status(201).json({ message: 'Image uploaded successfully'});
     } catch (error) {
