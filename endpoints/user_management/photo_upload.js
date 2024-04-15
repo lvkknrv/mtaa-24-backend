@@ -1,16 +1,19 @@
 import express from 'express';
+import multer from 'multer';
 import client from '../../db.js';
 
 const uploadImageRouter = express.Router();
 
-uploadImageRouter.post('/:userId/photo', async (req, res) => {
+const upload = multer();
+
+uploadImageRouter.post('/:userId/photo/upload', upload.single('imageFile'), async (req, res) => {
+    const userId = req.params.userId;
     try {
-        const imageData = req.files.imageFile.data;
+        const imageData = req.file.buffer;
 
-        const result = await client.query('INSERT INTO users (image) VALUES ($1)', [imageData]);
-        const newImageId = result.rows[0].id;
+        const result = await client.query('UPDATE users SET image = $1 WHERE id = $2\n', [imageData, userId]);
 
-        res.status(201).json({ message: 'Image uploaded successfully', imageId: newImageId });
+        res.status(201).json({ message: 'Image uploaded successfully'});
     } catch (error) {
         console.error('Error uploading image:', error);
         res.status(500).json({ message: 'An error occurred when uploading the image' });
