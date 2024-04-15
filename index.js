@@ -10,6 +10,8 @@ import cancelOrderRouter from "./endpoints/order_management/cancel.js";
 import availableOrdersRouter from "./endpoints/order_management/available_orders.js";
 import updateUsernameRouter from "./endpoints/user_management/username_change.js";
 import acceptOrderRouter from "./endpoints/order_management/accept_order.js";
+import startTripRouter from "./endpoints/order_management/trip_start.js";
+import endTripRouter from "./endpoints/order_management/trip_end.js";
 
 const PORT = 8000;
 const app = express();
@@ -24,7 +26,9 @@ app.use('/users', updateUsernameRouter)
 app.use('/orders', createOrderRouter);
 app.use('/orders', cancelOrderRouter);
 app.use('/online', availableOrdersRouter);
-app.use('/online', acceptOrderRouter());
+app.use('/online', acceptOrderRouter);
+app.use('/online', startTripRouter);
+app.use('/online', endTripRouter);
 
 app.get('/users', async (req, res) => {
     try {

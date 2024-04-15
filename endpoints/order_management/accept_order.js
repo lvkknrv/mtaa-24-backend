@@ -13,7 +13,8 @@ acceptOrderRouter.put('/accept/:driverId/:orderId', async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        await client.query('UPDATE orders SET status_id = 1, driver_id = $1 WHERE id = $2', [driverId, orderId]);
+        const currentDate = new Date().toISOString();
+        await client.query('UPDATE orders SET status_id = 1, driver_id = $1, accepted_at = $2 WHERE id = $3', [driverId, currentDate, orderId]);
 
         res.status(200).json({ message: 'Order accepted successfully' });
     } catch (error) {
