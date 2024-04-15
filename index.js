@@ -31,8 +31,10 @@ app.use('/users', updateEmailRouter);
 app.use('/users', uploadImageRouter);
 app.use('/users', getUserPhotoRouter);
 app.use('/users', getUserInfoRouter);
+
 app.use('/orders', createOrderRouter);
 app.use('/orders', cancelOrderRouter);
+
 app.use('/online', availableOrdersRouter);
 app.use('/online', acceptOrderRouter);
 app.use('/online', startTripRouter);

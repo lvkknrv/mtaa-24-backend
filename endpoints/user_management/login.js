@@ -33,7 +33,7 @@ loginRouter.post('/', async (req, res) => {
 
             return res.status(200).json({token});
         } else {
-            return res.status(401).json({error: 'Invalid username or password.'});
+            return res.status(401).json({error: 'Invalid email or password.'});
         }
     } catch (error) {
         console.error('Error logging in user:', error);

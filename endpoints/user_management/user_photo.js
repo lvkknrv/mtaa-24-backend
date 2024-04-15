@@ -23,6 +23,10 @@ getUserPhotoRouter.get('/:userId/photo', async (req, res) => {
 
         const imageBytes = userData.image;
 
+        if (!imageBytes) {
+            return res.status(404).json({ message: 'User photo not found' });
+        }
+
         const jpegImage = await sharp(Buffer.from(imageBytes)).toFormat('jpeg').toBuffer();
 
         res.writeHead(200, {

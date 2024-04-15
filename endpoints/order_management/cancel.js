@@ -14,6 +14,14 @@ cancelOrderRouter.delete('/:userId/:orderId/cancel', async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
+        const orderCheck = await client.query(
+            'SELECT * FROM orders WHERE id = $1 AND user_id = $2 AND status_id = 4',
+            [orderId, userId]
+        );
+        if (orderCheck.rows.length === 0) {
+            return res.status(404).json({ message: 'Order not found for the user' });
+        }
+
         await client.query(
             'DELETE FROM orders o WHERE o.id = $1 AND o.user_id = $2 AND o.status_id = 4',
             [orderId, userId]
