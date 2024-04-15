@@ -5,10 +5,13 @@ import {verifyToken} from "../../tokenmanagement.js";
 
 const updateEmailRouter = express.Router();
 
+<<<<<<< HEAD
 function isValidEmail(email) {
     return validator.validate(email);
 }
 
+=======
+>>>>>>> f7855045ba9b9096f077894d7f183f39f6b09f82
 updateEmailRouter.put('/:userId/email', async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -24,7 +27,7 @@ updateEmailRouter.put('/:userId/email', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (!validator.validate(email)) {
+        if (!validator.validate(newEmail)) {
             return res.status(400).json({ message: 'Invalid email format' });
         }
 
