@@ -7,18 +7,10 @@ const logoutRouter = express.Router();
 logoutRouter.delete('/:userId/logout', async (req, res) => {
     try {
         const userId = req.params.userId;
-        const token = req.headers.authorization.split(' ')[1];
 
-        const decodedUserId = verifyToken(token);
+        const decodedUserId = await verifyToken(userId);
         if (!decodedUserId) {
-            return res.status(401).json({error: 'Unauthorized'});
-        }
-
-        const tokenQuery = 'SELECT * FROM tokens WHERE user_id = $1';
-        const tokenResult = await client.query(tokenQuery, [userId]);
-
-        if (tokenResult.rows.length === 0) {
-            return res.status(404).json({error: 'Token not found for the user.'});
+            return res.status(401).json({ error: 'Unauthorized' });
         }
 
         const deleteTokenQuery = 'DELETE FROM tokens WHERE user_id = $1';

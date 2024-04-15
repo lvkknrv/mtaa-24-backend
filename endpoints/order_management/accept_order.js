@@ -1,13 +1,26 @@
 import express from 'express';
 import client from '../../db.js';
+import {verifyToken} from "../../tokenmanagement.js";
 
 const acceptOrderRouter = express.Router();
 
 acceptOrderRouter.put('/accept/:driverId/:orderId', async (req, res) => {
-    const driverId = req.params.driverId;
-    const orderId = req.params.orderId;
-
     try {
+        const driverId = req.params.driverId;
+        const orderId = req.params.orderId;
+
+        const Result = await client.query('SELECT user_id FROM drivers WHERE id = $1', [driverId]);
+        if (Result.rows.length === 0) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        const userId = Result.rows[0].user_id;
+
+        const decodedUserId = await verifyToken(userId);
+        if (!decodedUserId) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         const orderCheck = await client.query('SELECT * FROM orders WHERE id = $1', [orderId]);
         if (orderCheck.rows.length === 0) {
             return res.status(404).json({ message: 'Order not found' });

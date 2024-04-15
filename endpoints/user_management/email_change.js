@@ -1,19 +1,24 @@
 import express from 'express';
-import validator from 'email-validator'; // Импортируем библиотеку для валидации имейла
+import validator from 'email-validator';
 import client from '../../db.js';
+import {verifyToken} from "../../tokenmanagement.js";
 
 const updateEmailRouter = express.Router();
 
-// Функция для проверки валидности имейла
 function isValidEmail(email) {
-    return validator.validate(email); // Используем метод validate из библиотеки email-validator
+    return validator.validate(email);
 }
 
 updateEmailRouter.put('/:userId/email', async (req, res) => {
-    const userId = req.params.userId;
-    const newEmail = req.body.newEmail;
-
     try {
+        const userId = req.params.userId;
+        const newEmail = req.body.newEmail;
+
+        const decodedUserId = await verifyToken(userId);
+        if (!decodedUserId) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         const userCheck = await client.query('SELECT * FROM users WHERE id = $1', [userId]);
         if (userCheck.rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });

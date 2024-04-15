@@ -1,13 +1,19 @@
 import express from 'express';
 import client from '../../db.js';
+import {verifyToken} from "../../tokenmanagement.js";
 
 const createOrderRouter = express.Router();
 
 createOrderRouter.post('/:userId/create', async (req, res) => {
-    const userId = req.params.userId;
-    const {pickupLocation, destinationLocation} = req.body;
-
     try {
+        const userId = req.params.userId;
+        const {pickupLocation, destinationLocation} = req.body;
+
+        const decodedUserId = await verifyToken(userId);
+        if (!decodedUserId) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         const currentDate = new Date().toISOString();
         const result = await client.query(
             'INSERT INTO orders (user_id, pickupLocation, destinationLocation, created_at, status_id) VALUES ($1, $2, $3, $4, 4)',

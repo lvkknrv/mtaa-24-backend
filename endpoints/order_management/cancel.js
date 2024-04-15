@@ -1,13 +1,19 @@
 import express from 'express';
 import client from '../../db.js';
+import {verifyToken} from "../../tokenmanagement.js";
 
 const cancelOrderRouter = express.Router();
 
 cancelOrderRouter.delete('/:userId/:orderId/cancel', async (req, res) => {
-    const userId = req.params.userId;
-    const orderId = req.params.orderId;
-
     try {
+        const userId = req.params.userId;
+        const orderId = req.params.orderId;
+
+        const decodedUserId = await verifyToken(userId);
+        if (!decodedUserId) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
         await client.query(
             'DELETE FROM orders o WHERE o.id = $1 AND o.user_id = $2 AND o.status_id = 4',
             [orderId, userId]
